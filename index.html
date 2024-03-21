@@ -1,0 +1,259 @@
+<html>
+	<body id="body">
+		<canvas id="canvas" width="800px" height="800px"></canvas>
+		<audio id="audio">
+			<source id="source-ogg" src="" type="audio/ogg">
+			<source id="source-wav" src="" type="audio/wav">
+			<source id="source-mp3" src="" type="audio/mp3">
+		</audio>
+		<script>
+
+			var tokenId = 1;
+
+			var audioFileUrl = "https://crimson-additional-fly-467.mypinata.cloud/ipfs/QmfXfhTzbjhvs8BzFNPLd8munjcawVxYrjwcrhHqBtTsEa";
+
+			var audioFirstFrameBase64 = "SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjQuMTAwAAAAAAAAAAAAAAD/+1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABJbmZvAAAADwAAAVsAAI5yAAQGCQsOEBMWGBseICMlKCosLzE0Nzk8P0FERklLTlBTVVhaXWBiZWdqbG9xdHZ5e36Bg4aIi42QkpWXmpyfoqWnqqyusbO2uLu9wMPGyMvN0NLV19nc3uHk5+ns7vHz";
+
+			var audioFirstFrameHex = base64ToHex(audioFirstFrameBase64);
+
+			var hexSymbols = "0123456789abcdef";
+
+			var body = document.getElementById("body");
+			var canvas = document.getElementById("canvas");
+			var audio = document.getElementById('audio');
+			var sourceogg = document.getElementById('source-ogg');
+			var sourcewav = document.getElementById('source-wav');
+			var sourcemp3 = document.getElementById('source-mp3');
+
+			var context = canvas.getContext("2d");
+
+			// Get the start index for the current position in the audio hex data
+
+			var currentFileIdx = 0;
+
+			// Create a predefined 4x4 grid at the center of of the 8x8 color grid
+
+			var bird1Hex = '736730'; // Ovenbird
+			var bird2Hex = 'ACA292'; // Hermit Thrush
+			var bird3Hex = 'D06809'; // American Robin
+			var bird4Hex = 'EA453A'; // Pileated Woodpecker
+			var bird5Hex = '18303A'; // Common Loon
+
+			var lockedColors = new Array(64);
+
+			lockedColors[18] = bird5Hex;
+			lockedColors[19] = bird1Hex;
+			lockedColors[20] = bird2Hex;
+			lockedColors[21] = bird5Hex;
+			lockedColors[26] = bird2Hex;
+			lockedColors[27] = bird3Hex;
+			lockedColors[28] = bird4Hex;
+			lockedColors[29] = bird1Hex;
+			lockedColors[34] = bird1Hex;
+			lockedColors[35] = bird4Hex;
+			lockedColors[36] = bird3Hex;
+			lockedColors[37] = bird2Hex;
+			lockedColors[42] = bird5Hex;
+			lockedColors[43] = bird2Hex;
+			lockedColors[44] = bird1Hex;
+			lockedColors[45] = bird5Hex;
+
+			drawBoardFrame(audioFirstFrameHex, 0);
+
+			body.addEventListener("click", (event) => {
+
+				var request = new XMLHttpRequest();
+
+				request.open(
+					'GET',
+					audioFileUrl,
+					true,
+				);
+
+				request.responseType = 'arraybuffer';
+
+				request.onload = function() {
+
+					const audioHex = buf2hex(request.response);
+					const audioBase64 = buf2base64(request.response);
+
+					// console.debug(audioHex.slice(0, 384));
+
+					sourceogg.src = 'data:audio/ogg;base64,' + audioBase64;
+
+					sourcewav.src = 'data:audio/wav;base64,' + audioBase64;
+
+					sourcemp3.src = 'data:audio/mp3;base64,' + audioBase64;
+
+					audio.loop = true;
+
+					audio.load();
+
+					drawBoard(audioHex);
+
+					audio.play();
+
+				}
+
+				request.send();
+
+			});
+
+			function drawBoardFrame(audioHex, startIdx) {
+
+				for (let i = 0; i < 8; i++) {
+
+					for (let j = 0; j < 8; j++) {
+
+						var iIdx = i * 6;
+						var jIdx = j * 48;
+
+						var squareStartIdx = startIdx + iIdx + jIdx;
+
+						var finalColor = lockedColors[j * 8 + i];
+
+						if (!finalColor) {
+
+							var pieceColorHex = audioHex.slice(squareStartIdx, squareStartIdx + 6);
+
+							console.debug('---------------------------');
+							console.debug(squareStartIdx);
+
+							finalColor = hashColorCode(pieceColorHex, tokenId, squareStartIdx);
+
+							console.debug(`initial=${pieceColorHex} -> final=${finalColor}`);
+
+						}
+
+						context.clearRect(i * 100, j * 100, 100, 100);
+
+						context.fillStyle = '#' + finalColor;
+
+						context.fillRect(i * 100, j * 100, 100, 100);
+
+					}
+
+				}
+
+			}
+
+			function drawBoard(audioHex){
+
+				requestAnimationFrame(animate);
+
+				var repaint = setInterval(changeColor, 47.3294987675);
+
+				function animate() {
+
+					drawBoardFrame(audioHex, currentFileIdx);
+
+					requestAnimationFrame(animate);
+
+				}
+
+				function changeColor() {
+
+					// 2 hex chars = 1 byte
+
+					// 73020 hex chars in the audio file = 36510 bytes
+
+					// 8x8 grid of squares consisting of 6 hex chars each from audio file
+
+					// 64 * 6 = 384 hex chars per frame
+
+					// 73020 / 384 = 190.15625 frames in total
+
+					// Audio file is 9 seconds, i.e. 21.1284722222 frames per second
+
+					// 47.3294987675 milliseconds per frame
+
+					currentFileIdx += 384;
+
+					if ((currentFileIdx + 384) > audioHex.length) {
+						currentFileIdx = 0;
+					}
+
+				}
+
+			}
+
+			function buf2hex(buffer) {
+
+				return [...new Uint8Array(buffer)]
+					.map(x => x.toString(16).padStart(2, '0'))
+					.join('');
+			
+			}
+
+			function buf2base64(buffer) {
+
+				var binary = '';
+				var bytes = new Uint8Array(buffer);
+				var len = bytes.byteLength;
+
+				for (var i = 0; i < len; i++) {
+					binary += String.fromCharCode(bytes[i]);
+				}
+
+				return btoa(binary);
+
+			}
+
+			function base64ToHex(value) {
+
+				var raw = atob(value);
+				var result = '';
+
+				for (var i = 0; i < raw.length; i++) {
+					var hex = raw.charCodeAt(i).toString(16);
+					result += (hex.length === 2 ? hex : '0' + hex);
+				}
+				return result.toUpperCase();
+
+			}
+
+			function hashColorCode(key, tokenId, squareStartIdx) {
+
+				console.debug(Number(`0x${key}`));
+				console.debug(squareStartIdx);
+
+				var hash = BigInt(Number(`0x${key}`) + tokenId + squareStartIdx);
+
+				console.log(hash);
+
+				hash = ((hash >> BigInt(16)) ^ hash) * BigInt(0x45d9f3b);
+
+				console.log(hash);
+
+				hash = ((hash >> BigInt(16)) ^ hash) * BigInt(0x45d9f3b);
+
+				console.log(hash);
+
+				hash = (hash >> BigInt(16)) ^ hash;
+
+				console.log(hash);
+
+				// Modulo 2^24, so the result is exactly 6 hex chars in length
+				hash =  Number(hash % BigInt(16777216));
+
+				console.debug(`hex: ${key}`);
+				console.debug(`base10: ${Number(`0x${key}`)}`);
+				console.debug(`hash: ${hash}`);
+
+				var result = "";
+				
+				for (var i = 0; i < 6; i++) {
+
+					var hexIndex = ((hash >> (4*i)) & 0xf);
+
+					result += hexSymbols[hexIndex];
+
+				}
+
+				return result;
+
+			}
+
+		</script>
+	</body>
+</html>

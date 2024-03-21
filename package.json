@@ -1,0 +1,32 @@
+{
+  "name": "sounds-of-summer-2024",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A combination of concepts from Base Colors and Songbirdz.",
+  "scripts": {
+    "start": "python3 -m http.server 8000 -d ./",
+    "compile-contracts": "NODE_ENV=development npx hardhat compile",
+    "test-contracts": "NODE_ENV=development npx hardhat test",
+    "deploy-local": "NODE_ENV=development npx hardhat run ./scripts/deployContract.js --network base-local",
+    "deploy-testnet": "NODE_ENV=staging npx hardhat run ./scripts/deployContract.js --network base-sepolia",
+    "deploy-mainnet": "NODE_ENV=production npx hardhat run ./scripts/deployContract.js --network base-mainnet",
+    "verify-testnet": "NODE_ENV=staging npx hardhat verify --network base-sepolia <deployed-address> <owner>",
+    "verify-mainnet": "NODE_ENV=production npx hardhat verify --network base-mainnet <deployed address> <owner>"
+  },
+  "keywords": [],
+  "author": "dry-tortuga",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.5",
+    "@nomicfoundation/hardhat-ledger": "^1.0.1",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "chai": "^4.3.4",
+    "dotenv": "^16.3.1",
+    "erc721a": "^4.3.0",
+    "hardhat": "^2.19.1",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.4.0"
+  }
+}
