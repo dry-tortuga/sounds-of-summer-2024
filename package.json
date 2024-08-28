@@ -10,8 +10,8 @@
     "deploy-local": "NODE_ENV=development npx hardhat run ./scripts/deployContract.js --network base-local",
     "deploy-testnet": "NODE_ENV=staging npx hardhat run ./scripts/deployContract.js --network base-sepolia",
     "deploy-mainnet": "NODE_ENV=production npx hardhat run ./scripts/deployContract.js --network base-mainnet",
-    "verify-testnet": "NODE_ENV=staging npx hardhat verify --network base-sepolia <deployed-address> <owner>",
-    "verify-mainnet": "NODE_ENV=production npx hardhat verify --network base-mainnet <deployed address> <owner>"
+    "verify-testnet": "NODE_ENV=staging npx hardhat verify --network base-sepolia <deployed-address>",
+    "verify-mainnet": "NODE_ENV=production npx hardhat verify --network base-mainnet <deployed address>"
   },
   "keywords": [],
   "author": "dry-tortuga",

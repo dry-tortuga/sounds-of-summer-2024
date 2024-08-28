@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
 /**
- * @title SoundsOfSummer2024 - A combination of concepts from Base Colors and Songbirdz.
+ * @title SoundsOfSummer - A combination of concepts from Base Colors and Songbirdz.
  * @notice drytortuga.base.eth x 0FJAKE.eth collaboration
  * @dev Mint NFTs with an audio recording that is animated using 8x8 grid of hex color codes.
  * @dev The SVG images and HTML animations are generated on-chain and stored fully on-chain on Base.
@@ -29,7 +29,7 @@ interface IBaseColors {
 	function getColorData(string memory color) external view returns (ColorData memory);
 }
 
-contract SoundsOfSummer2024 is ERC721A, Ownable, ReentrancyGuard {
+contract SoundsOfSummer is ERC721A, Ownable, ReentrancyGuard {
 
 	// Hardcode the mint price
 	uint256 private constant MINT_PRICE = 0.0001 ether;
@@ -74,9 +74,9 @@ contract SoundsOfSummer2024 is ERC721A, Ownable, ReentrancyGuard {
 
 	mapping(address => bool) private hasMinted;
 
-	constructor() Ownable(msg.sender) ERC721A("SoundsOfSummer2024", "SOUNDS_OF_SUMMER_2024") {
+	constructor() Ownable(msg.sender) ERC721A("SoundsOfSummer", "SOUNDS_OF_SUMMER") {
 
-		baseColorsAddress = 0x7bc1c072742d8391817eb4eb2317f98dc72c61db; // Base
+		baseColorsAddress = 0x7Bc1C072742D8391817EB4Eb2317F98dc72C61dB; // Base
 		baseColors = IBaseColors(baseColorsAddress);
 
 		lockedColors[18] = BIRD_5_HEX;
@@ -131,7 +131,7 @@ contract SoundsOfSummer2024 is ERC721A, Ownable, ReentrancyGuard {
 	 */
 	function publicMint(uint256 quantity) external payable nonReentrant {
 
-		require(quantity <= 25, "Max amount to mint is 25");
+		require(quantity > 0 && quantity <= 25, "Max amount to mint is 25");
 		require((MINT_PRICE * quantity) == msg.value, "Incorrect ETH value sent");
 
 		if ((_nextTokenId() + quantity) < MAX_NUM_MINTED) {
@@ -356,9 +356,9 @@ contract SoundsOfSummer2024 is ERC721A, Ownable, ReentrancyGuard {
 				Base64.encode(AUDIO_FIRST_FRAME_HEX),
 				"';</script>",
 				"<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'><style type='text/css'>html{height:100%;width:100%}body{height:100%;width:100%;margin:0;padding:0}canvas{display:block;max-width:100%;max-height:100%;padding:0;margin:auto;display:block;position:absolute;top:0;bottom:0;left:0;right:0;object-fit:contain;}</style>",
-				"</head><body>",
+				"</head>",
 				HTML_BODY,
-				"</body></html>"
+				"</html>"
 			)
 		);
 
