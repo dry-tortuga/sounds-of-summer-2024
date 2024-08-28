@@ -10,11 +10,13 @@ The audio recording is stored on IPFS due to size limitations.
 
 The audio recording features songs and calls from the following 5 birds:
 
-- Ovenbird [#736730](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21325)
-- Hermit Thrush [#ACA292](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21331)
-- American Robin [#D06809](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21326)
-- Pileated Woodpecker [#EA453A](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21323)
-- Common Loon [#18303A](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21327)
+- Ovenbird #736730
+- Hermit Thrush #ACA292
+- American Robin #D06809
+- Pileated Woodpecker #EA453A
+- Common Loon #18303A
+
+These 5 Base Colors are permanently featured in the center 4x4 of the grid.
 
 ## Minting
 
