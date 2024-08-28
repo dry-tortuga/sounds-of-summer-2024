@@ -8,6 +8,14 @@ The SVG images and HTML animations are generated on-chain and stored fully on-ch
 
 The audio recording is stored on IPFS due to size limitations.
 
+The audio recording features songs and calls from the following 5 birds:
+
+- Ovenbird [#736730](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21325)
+- Hermit Thrush [#ACA292](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21331)
+- American Robin [#D06809](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21326)
+- Pileated Woodpecker [#EA453A](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21323)
+- Common Loon [#18303A](https://opensea.io/assets/base/0x7bc1c072742d8391817eb4eb2317f98dc72c61db/21327)
+
 ## Minting
 
 - **Mint:** Mint at [mint.fun](https://mint.fun/base/0x06F2075d5a9f8Ca18f7FD13b4E18F78304eC2dC7) for 0.0001 ETH each
