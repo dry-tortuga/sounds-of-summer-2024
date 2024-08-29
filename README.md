@@ -21,7 +21,7 @@ These 5 Base Colors are permanently featured in the center 4x4 of the grid.
 ## Minting
 
 - **Mint:** Mint at [mint.fun](https://mint.fun/base/0x06F2075d5a9f8Ca18f7FD13b4E18F78304eC2dC7) for 0.0001 ETH each
-- **Mint as Songbirdz Holder:** Mint at [mint.fun](https://songbirdz.cc/sounds-of-summer-2024) for free if you are a Songbirdz holder. Snapshot taken at 08/28/2024 at 08:00 PM UTC. Limit of 1 NFT per address.
+- **Mint as Songbirdz Holder:** Mint at [https://songbirdz.cc/sounds-of-summer-2024](https://songbirdz.cc/sounds-of-summer-2024) for free if you are a Songbirdz holder. Snapshot taken at 08/28/2024 at 08:00 PM UTC. Limit of 1 NFT per address.
 - **View on Opensea:** [Sounds of Summer 2024 Collection](https://opensea.io/collection/sounds-of-summer)
 - **Contract on Base:** [View Contract on Basescan](https://basescan.org/address/0x06F2075d5a9f8Ca18f7FD13b4E18F78304eC2dC7)
 
