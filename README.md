@@ -6,7 +6,7 @@ Mint NFTs with an audio recording that is animated using an 8x8 grid of hex colo
 
 The SVG images and HTML animations are generated on-chain and stored fully on-chain on Base.
 
-The audio recording is stored on IPFS due to size limitations.
+The audio recording is stored on IPFS due to size limitations: https://ipfs.io/ipfs/QmfXfhTzbjhvs8BzFNPLd8munjcawVxYrjwcrhHqBtTsEa
 
 The audio recording features songs and calls from the following 5 birds:
 
